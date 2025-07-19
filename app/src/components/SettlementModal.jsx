@@ -1,4 +1,4 @@
-export default function SettlementModal({ players, pay, onNewGame }) {
+export default function SettlementModal({ players, pay, pairPay, onNewGame }) {
   return (
     <dialog open className="settlement-modal">
       <h2>结算</h2>
@@ -8,10 +8,12 @@ export default function SettlementModal({ players, pay, onNewGame }) {
         ))}
       </div>
       <div>
-        {players.map(p => (
-          pay[p.name] < 0 && (
-            <div key={p.name}>{p.name} 支付 {-pay[p.name]} </div>
-          )
+        {players.flatMap(p => (
+          Object.entries(pairPay[p.name]).map(([other, amt]) => (
+            amt > 0 && (
+              <div key={`${p.name}-${other}`}>{p.name} 支付 {amt} 给 {other}</div>
+            )
+          ))
         ))}
       </div>
       <button onClick={onNewGame}>开始新比赛</button>
