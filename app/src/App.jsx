@@ -34,6 +34,19 @@ function calculatePay(players) {
   return pay
 }
 
+function calculatePairPay(players) {
+  const result = {}
+  players.forEach(p => {
+    result[p.name] = {}
+    players.forEach(q => {
+      if (p.name === q.name) return
+      const diff = q.score - p.score
+      result[p.name][q.name] = diff > 0 ? diff * 5 : 0
+    })
+  })
+  return result
+}
+
 function App() {
   const [game, setGame] = useState(loadCurrent)
   const [showSetup, setShowSetup] = useState(false)
@@ -77,6 +90,7 @@ function App() {
   }
 
   const pay = calculatePay(game.players)
+  const pairPay = calculatePairPay(game.players)
 
   return (
     <div className="app">
@@ -96,7 +110,7 @@ function App() {
         <button onClick={()=>setShowHistory(true)}>查看历史</button>
       </div>
       {showSetup && <PlayerSetupDialog players={game.players} onSave={saveNames} />}
-      {game.isFinished && <SettlementModal players={game.players} pay={pay} onNewGame={startNewGame} />}
+      {game.isFinished && <SettlementModal players={game.players} pay={pay} pairPay={pairPay} onNewGame={startNewGame} />}
     </div>
   )
 }
