@@ -1,3 +1,4 @@
 node_modules
 app/node_modules
 dist
+server/games.json
