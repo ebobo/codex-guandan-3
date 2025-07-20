@@ -45,6 +45,18 @@ VITE_SERVER_URL=http://192.168.0.5:3000 npm run dev
 ```
 
 Use `npm run build` inside `/app` to create a production build in `app/dist`.
+The build includes a service worker so the site can be installed as a
+Progressive Web App (PWA). The default configuration uses the `vite.svg` logo
+as the app icon. To use custom icons, add `pwa-192x192.png` and
+`pwa-512x512.png` under `app/public` and reference them in `vite.config.js`.
+
+### 3. Install as a PWA
+
+The front-end can work offline after it is loaded once. Run a production build
+and serve the static files with any web server (for example `npx serve dist` in
+the `app` directory). When opened on iOS Safari, tap the share button and choose
+"Add to Home Screen". The app will then cache all necessary files and can be
+launched later without the development server.
 
 ### Connection status and history
 
