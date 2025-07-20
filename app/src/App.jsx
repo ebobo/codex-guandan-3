@@ -56,10 +56,21 @@ function App() {
   const [showHistory, setShowHistory] = useState(false);
   const [showCenterHistory, setShowCenterHistory] = useState(false);
   const [isSynced, setIsSynced] = useState(false);
+  const [serverConnected, setServerConnected] = useState(false);
+
+  const checkServer = () => {
+    fetch('http://localhost:3000/games')
+      .then(() => setServerConnected(true))
+      .catch(() => setServerConnected(false));
+  };
 
   useEffect(() => {
     saveCurrent(game);
   }, [game]);
+
+  useEffect(() => {
+    checkServer();
+  }, []);
 
   const recordRound = ({ first, second }) => {
     if (game.isFinished) return;
@@ -126,8 +137,10 @@ function App() {
         body: JSON.stringify(body),
       });
       setIsSynced(true);
+      setServerConnected(true);
     } catch (e) {
       console.error('sync failed', e);
+      setServerConnected(false);
     }
   };
 
@@ -165,6 +178,8 @@ function App() {
       <div className='status'>
         第 {game.rounds.length + 1} 局{' '}
         {game.isFinished ? '已结束' : '尚未有人 > 12 分'}
+        {' | '}
+        {serverConnected ? '已连接中心' : '未连接中心'}
       </div>
       <table className='scoreboard'>
         <thead>
@@ -194,7 +209,12 @@ function App() {
         <button onClick={resetCurrent}>重置本局</button>
         <button onClick={() => setShowSetup(true)}>设置玩家</button>
         <button onClick={() => setShowHistory(true)}>查看历史</button>
-        <button onClick={() => setShowCenterHistory(true)}>中心历史</button>
+        <button
+          onClick={() => setShowCenterHistory(true)}
+          disabled={!serverConnected}
+        >
+          中心历史
+        </button>
       </div>
       {showSetup && (
         <PlayerSetupDialog players={game.players} onSave={saveNames} />
@@ -207,6 +227,7 @@ function App() {
           onNewGame={startNewGame}
           onSync={syncGame}
           synced={isSynced}
+          canSync={serverConnected}
         />
       )}
     </div>

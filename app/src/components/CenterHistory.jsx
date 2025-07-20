@@ -31,12 +31,18 @@ function GameItem({ game }) {
 export default function CenterHistory({ onBack }) {
   const [games, setGames] = useState([])
   const [filterDate, setFilterDate] = useState('')
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     fetch('http://localhost:3000/games')
       .then(r => r.json())
-      .then(setGames)
-      .catch(() => {})
+      .then(data => {
+        setGames(data)
+        setError(false)
+      })
+      .catch(() => {
+        setError(true)
+      })
   }, [])
 
   const filtered = games.filter(g => !filterDate || new Date(g.timestamp).toISOString().slice(0,10) === filterDate)
@@ -52,6 +58,7 @@ export default function CenterHistory({ onBack }) {
     <div className="history">
       <button onClick={onBack}>返回</button>
       <h2>中心历史记录</h2>
+      {error && <div style={{color:'red'}}>无法连接中心服务器</div>}
       <div>
         <label>日期筛选:
           <input type="date" value={filterDate} onChange={e=>setFilterDate(e.target.value)} />

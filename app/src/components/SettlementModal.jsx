@@ -1,4 +1,4 @@
-export default function SettlementModal({ players, pay, pairPay, onNewGame, onSync, synced }) {
+export default function SettlementModal({ players, pay, pairPay, onNewGame, onSync, synced, canSync }) {
   return (
     <dialog open className='settlement-modal'>
       <h2>结算</h2>
@@ -24,7 +24,7 @@ export default function SettlementModal({ players, pay, pairPay, onNewGame, onSy
       </div>
 
       <div style={{marginTop:'1em'}}>
-        <button onClick={onSync} disabled={synced} style={{marginRight:'1em'}}>
+        <button onClick={onSync} disabled={!canSync || synced} style={{marginRight:'1em'}}>
           {synced ? '已同步' : '同步到中心'}
         </button>
         <button onClick={onNewGame} className='new-game-btn'>
