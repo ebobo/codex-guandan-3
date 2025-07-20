@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import SERVER_URL from '../serverConfig.js'
 
 function GameItem({ game, onDelete }) {
   const [open, setOpen] = useState(false)
@@ -35,7 +36,7 @@ export default function CenterHistory({ onBack }) {
   const [error, setError] = useState(false)
 
   useEffect(() => {
-    fetch('http://localhost:3000/games')
+    fetch(`${SERVER_URL}/games`)
       .then(r => r.json())
       .then(data => {
         setGames(data)
@@ -48,7 +49,7 @@ export default function CenterHistory({ onBack }) {
 
   const deleteGame = async (ts) => {
     if (!window.confirm('确定要删除该记录吗？')) return
-    await fetch(`http://localhost:3000/games/${ts}`, { method: 'DELETE' })
+    await fetch(`${SERVER_URL}/games/${ts}`, { method: 'DELETE' })
     setGames((gs) => gs.filter((g) => g.timestamp !== ts))
   }
 

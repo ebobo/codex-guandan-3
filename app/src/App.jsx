@@ -4,6 +4,7 @@ import RoundForm from './components/RoundForm.jsx';
 import SettlementModal from './components/SettlementModal.jsx';
 import History from './components/History.jsx';
 import CenterHistory from './components/CenterHistory.jsx';
+import SERVER_URL from './serverConfig.js';
 import './App.css';
 
 const defaultNames = ['Wu', 'Ellen', 'Qi'];
@@ -59,7 +60,7 @@ function App() {
   const [serverConnected, setServerConnected] = useState(false);
 
   const checkServer = () => {
-    fetch('http://localhost:3000/games')
+    fetch(`${SERVER_URL}/games`)
       .then(() => setServerConnected(true))
       .catch(() => setServerConnected(false));
   };
@@ -131,7 +132,7 @@ function App() {
       totalPay: pay,
     };
     try {
-      await fetch('http://localhost:3000/games', {
+      await fetch(`${SERVER_URL}/games`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

@@ -25,7 +25,12 @@ npm install
 npm start
 ```
 
-The app expects the server to be reachable at `http://localhost:3000`.
+Set the `PORT` environment variable if you need the server to listen on a
+different port.
+
+By default the web app contacts `http://<app host>:3000`. You can set
+`VITE_SERVER_URL` to use a different address when running or building the
+frontend.
 
 On startup the app checks connectivity and shows "已连接中心" in the status bar
 when the server responds. If the server is unreachable, the "同步到中心" and

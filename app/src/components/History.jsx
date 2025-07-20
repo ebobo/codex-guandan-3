@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import SERVER_URL from '../serverConfig.js'
 
 function GameItem({ game }) {
   const [open, setOpen] = useState(false)
@@ -46,7 +47,7 @@ export default function History({ onBack }) {
     setSyncing(true)
     for (const g of filtered) {
       try {
-        await fetch('http://localhost:3000/games', {
+        await fetch(`${SERVER_URL}/games`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(g),
