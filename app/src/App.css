@@ -4,6 +4,14 @@
   padding: 1rem;
   text-align: center;
 }
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0;
+  padding-top: 2rem; /* Adjust space as needed */
+}
 .scoreboard {
   width: 100%;
   margin-bottom: 1rem;
@@ -31,4 +39,28 @@
   border: none;
   padding: 1rem;
   text-align: left;
+}
+.settlement-pay {
+  font-size: 1.2rem;
+  color: #e67e22; /* Use any color you like */
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.settlement-score {
+  margin-bottom: 1rem;
+}
+.new-game-btn {
+  font-size: 1.1rem;
+  padding: 0.8rem 1.5rem;
+  background-color: #27ae60;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+.new-game-btn:hover {
+  background-color: #219150;
 }
