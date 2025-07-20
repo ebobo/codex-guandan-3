@@ -36,6 +36,15 @@ app.delete('/games/:timestamp', (req, res) => {
   res.json({ success: true })
 })
 
+app.delete('/games/date/:date', (req, res) => {
+  const d = req.params.date
+  games = games.filter(
+    (g) => new Date(g.timestamp).toISOString().slice(0, 10) !== d
+  )
+  fs.writeFileSync(dataFile, JSON.stringify(games, null, 2))
+  res.json({ success: true })
+})
+
 app.listen(PORT, () => {
   console.log(`Central server listening on port ${PORT}`)
 })

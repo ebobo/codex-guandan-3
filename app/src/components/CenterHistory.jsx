@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react'
 import SERVER_URL from '../serverConfig.js'
 
-function GameItem({ game, onDelete }) {
+function GameItem({ game }) {
   const [open, setOpen] = useState(false)
   const winner = [...game.players].sort((a,b)=> b.score - a.score || a.name.localeCompare(b.name))[0]
   return (
     <li className="game-item">
-      <div onClick={()=>setOpen(!open)} style={{cursor:'pointer',display:'flex',justifyContent:'space-between'}}>
-        <span>{new Date(game.timestamp).toLocaleString()} - 胜者:{winner.name} 用时{game.rounds.length}局</span>
-        <button onClick={e=>{e.stopPropagation(); onDelete(game.timestamp)}}>删除</button>
+      <div onClick={()=>setOpen(!open)} style={{cursor:'pointer'}}>
+        {new Date(game.timestamp).toLocaleString()} - 胜者:{winner.name} 用时{game.rounds.length}局
       </div>
       {open && (
         <div className="game-detail">
@@ -49,18 +48,32 @@ export default function CenterHistory({ onBack }) {
       })
   }, [])
 
-  const deleteGame = async (ts) => {
-    if (!window.confirm('确定要删除该记录吗？')) return
-    await fetch(`${SERVER_URL}/games/${ts}`, { method: 'DELETE' })
-    setGames((gs) => gs.filter((g) => g.timestamp !== ts))
+  const deleteDate = async () => {
+    if (!filterDate) return
+    if (!window.confirm(`删除 ${filterDate} 的所有记录吗？`)) return
+    await fetch(`${SERVER_URL}/games/date/${filterDate}`, { method: 'DELETE' })
+    setGames(gs =>
+      gs.filter(
+        g => new Date(g.timestamp).toISOString().slice(0,10) !== filterDate
+      )
+    )
   }
 
-  const filtered = games.filter(g => !filterDate || new Date(g.timestamp).toISOString().slice(0,10) === filterDate)
+  const filtered = games.filter(
+    (g) => !filterDate || new Date(g.timestamp).toISOString().slice(0, 10) === filterDate
+  )
 
-  const career = {}
-  filtered.forEach(g => {
-    Object.entries(g.totalPay).forEach(([n,v]) => {
-      career[n]=(career[n]||0)+v
+  const totalCareer = {}
+  games.forEach((g) => {
+    Object.entries(g.totalPay).forEach(([n, v]) => {
+      totalCareer[n] = (totalCareer[n] || 0) + v
+    })
+  })
+
+  const daily = {}
+  filtered.forEach((g) => {
+    Object.entries(g.totalPay).forEach(([n, v]) => {
+      daily[n] = (daily[n] || 0) + v
     })
   })
 
@@ -70,19 +83,26 @@ export default function CenterHistory({ onBack }) {
       <h2>中心历史记录</h2>
       {error && <div style={{color:'red'}}>无法连接中心服务器</div>}
       <div>
+        生涯盈亏:
+        {Object.entries(totalCareer).map(([n,v])=> (
+          <span key={n} style={{marginRight:'1em'}}>{n}:{v>0?'+':''}{v}</span>
+        ))}
+      </div>
+      <div style={{display:'flex',alignItems:'center',gap:'0.5em'}}>
         <label>日期筛选:
           <input type="date" value={filterDate} onChange={e=>setFilterDate(e.target.value)} />
         </label>
+        <button onClick={deleteDate} disabled={!filterDate} title="删除当日记录">🗑️</button>
       </div>
       <div>
-        生涯盈亏:
-        {Object.entries(career).map(([n,v])=> (
+        单日盈亏:
+        {Object.entries(daily).map(([n,v])=> (
           <span key={n} style={{marginRight:'1em'}}>{n}:{v>0?'+':''}{v}</span>
         ))}
       </div>
       <ul>
         {filtered.map(g => (
-          <GameItem key={g.timestamp} game={g} onDelete={deleteGame} />
+          <GameItem key={g.timestamp} game={g} />
         ))}
       </ul>
     </div>

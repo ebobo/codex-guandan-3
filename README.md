@@ -17,6 +17,12 @@ npm install
 npm start        # use PORT=4000 npm start to change the port
 ```
 
+The server exposes a few JSON endpoints under `/games`:
+
+- `GET /games` – retrieve all stored games
+- `POST /games` – add a new game record
+- `DELETE /games/date/:yyyy-mm-dd` – remove every game played on the given day
+
 ### 2. Run the web app
 
 In another terminal start the Vite dev server:
@@ -47,5 +53,6 @@ sync button and "中心历史" button are disabled.
 
 The local history page lets you filter games by date and upload them to the
 server with **同步所选日期到中心**. The center history page defaults to today and
-displays per-player totals. Each record has a **删除** button that asks for
-confirmation before removing it from `games.json`.
+shows **单日盈亏** for the selected date as well as overall **生涯盈亏** totals.
+Use the 🗑️ button next to the date picker to remove every record for that day
+from `games.json`.
