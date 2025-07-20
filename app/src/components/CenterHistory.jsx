@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function GameItem({ game }) {
   const [open, setOpen] = useState(false)
@@ -28,20 +28,30 @@ function GameItem({ game }) {
   )
 }
 
-export default function History({ onBack }) {
-  const [games] = useState(() => JSON.parse(localStorage.getItem('games')||'[]'))
+export default function CenterHistory({ onBack }) {
+  const [games, setGames] = useState([])
   const [filterDate, setFilterDate] = useState('')
+
+  useEffect(() => {
+    fetch('http://localhost:3000/games')
+      .then(r => r.json())
+      .then(setGames)
+      .catch(() => {})
+  }, [])
+
   const filtered = games.filter(g => !filterDate || new Date(g.timestamp).toISOString().slice(0,10) === filterDate)
+
   const career = {}
   filtered.forEach(g => {
     Object.entries(g.totalPay).forEach(([n,v]) => {
       career[n]=(career[n]||0)+v
     })
   })
+
   return (
     <div className="history">
       <button onClick={onBack}>返回</button>
-      <h2>历史记录</h2>
+      <h2>中心历史记录</h2>
       <div>
         <label>日期筛选:
           <input type="date" value={filterDate} onChange={e=>setFilterDate(e.target.value)} />

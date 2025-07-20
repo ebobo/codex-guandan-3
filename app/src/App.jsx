@@ -3,6 +3,7 @@ import PlayerSetupDialog from './components/PlayerSetupDialog.jsx';
 import RoundForm from './components/RoundForm.jsx';
 import SettlementModal from './components/SettlementModal.jsx';
 import History from './components/History.jsx';
+import CenterHistory from './components/CenterHistory.jsx';
 import './App.css';
 
 const defaultNames = ['Wu', 'Ellen', 'Qi'];
@@ -53,6 +54,8 @@ function App() {
   const [game, setGame] = useState(loadCurrent);
   const [showSetup, setShowSetup] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [showCenterHistory, setShowCenterHistory] = useState(false);
+  const [isSynced, setIsSynced] = useState(false);
 
   useEffect(() => {
     saveCurrent(game);
@@ -101,6 +104,31 @@ function App() {
     }));
     const newGame = { players: freshPlayers, rounds: [], isFinished: false };
     setGame(newGame);
+    setIsSynced(false);
+  };
+
+  const syncGame = async () => {
+    const pay = calculatePay(game.players);
+    const finishedPlayers = game.players.map((p) => ({
+      ...p,
+      net: pay[p.name],
+    }));
+    const body = {
+      timestamp: Date.now(),
+      players: finishedPlayers,
+      rounds: game.rounds,
+      totalPay: pay,
+    };
+    try {
+      await fetch('http://localhost:3000/games', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      setIsSynced(true);
+    } catch (e) {
+      console.error('sync failed', e);
+    }
   };
 
   const resetCurrent = () => {
@@ -119,6 +147,10 @@ function App() {
     const max = Math.max(...players.map((p) => p.score));
     setGame({ players, rounds, isFinished: max > 12 });
   };
+
+  if (showCenterHistory) {
+    return <CenterHistory onBack={() => setShowCenterHistory(false)} />;
+  }
 
   if (showHistory) {
     return <History onBack={() => setShowHistory(false)} />;
@@ -162,6 +194,7 @@ function App() {
         <button onClick={resetCurrent}>重置本局</button>
         <button onClick={() => setShowSetup(true)}>设置玩家</button>
         <button onClick={() => setShowHistory(true)}>查看历史</button>
+        <button onClick={() => setShowCenterHistory(true)}>中心历史</button>
       </div>
       {showSetup && (
         <PlayerSetupDialog players={game.players} onSave={saveNames} />
@@ -172,6 +205,8 @@ function App() {
           pay={pay}
           pairPay={pairPay}
           onNewGame={startNewGame}
+          onSync={syncGame}
+          synced={isSynced}
         />
       )}
     </div>
