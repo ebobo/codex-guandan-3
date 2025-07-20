@@ -31,13 +31,26 @@ function GameItem({ game }) {
 
 export default function History({ onBack }) {
   const [games] = useState(() => JSON.parse(localStorage.getItem('games')||'[]'))
-  const [filterDate, setFilterDate] = useState('')
+  const [filterDate, setFilterDate] = useState(() =>
+    new Date().toISOString().slice(0, 10)
+  )
   const [syncing, setSyncing] = useState(false)
-  const filtered = games.filter(g => !filterDate || new Date(g.timestamp).toISOString().slice(0,10) === filterDate)
-  const career = {}
+
+  const filtered = games.filter(g =>
+    !filterDate || new Date(g.timestamp).toISOString().slice(0,10) === filterDate
+  )
+
+  const totalCareer = {}
+  games.forEach(g => {
+    Object.entries(g.totalPay).forEach(([n,v]) => {
+      totalCareer[n]=(totalCareer[n]||0)+v
+    })
+  })
+
+  const daily = {}
   filtered.forEach(g => {
     Object.entries(g.totalPay).forEach(([n,v]) => {
-      career[n]=(career[n]||0)+v
+      daily[n]=(daily[n]||0)+v
     })
   })
 
@@ -66,13 +79,19 @@ export default function History({ onBack }) {
       <button onClick={onBack}>返回</button>
       <h2>历史记录</h2>
       <div>
+        生涯盈亏:
+        {Object.entries(totalCareer).map(([n,v])=> (
+          <span key={n} style={{marginRight:'1em'}}>{n}:{v>0?'+':''}{v}</span>
+        ))}
+      </div>
+      <div>
         <label>日期筛选:
           <input type="date" value={filterDate} onChange={e=>setFilterDate(e.target.value)} />
         </label>
       </div>
       <div>
-        生涯盈亏:
-        {Object.entries(career).map(([n,v])=> (
+        单日盈亏:
+        {Object.entries(daily).map(([n,v])=> (
           <span key={n} style={{marginRight:'1em'}}>{n}:{v>0?'+':''}{v}</span>
         ))}
       </div>
