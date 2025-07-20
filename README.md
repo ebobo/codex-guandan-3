@@ -58,6 +58,11 @@ the `app` directory). When opened on iOS Safari, tap the share button and choose
 "Add to Home Screen". The app will then cache all necessary files and can be
 launched later without the development server.
 
+**Important:** iOS only allows service workers on secure origins. Be sure to
+serve `app/dist` over HTTPS (or use `localhost`) before adding the shortcut.
+If the site is opened via a plain HTTP IP address, the service worker will not
+register and the PWA cannot work offline.
+
 ### Connection status and history
 
 The app shows "已连接中心" when it can reach the server. When disconnected the
