@@ -4,9 +4,22 @@ Simple score keeping app for a three player card game. The `/app` directory
 contains the React front‑end created with Vite. A small Node.js server is
 included in `/server` for keeping a central history of games.
 
-## Running the app
+## Getting started
 
-Install dependencies and start the development server:
+### 1. Start the center server
+
+All synced games are written to `server/games.json`. Run the server on your Mac
+or any machine on the same network:
+
+```bash
+cd server
+npm install
+npm start        # use PORT=4000 npm start to change the port
+```
+
+### 2. Run the web app
+
+In another terminal start the Vite dev server:
 
 ```bash
 cd app
@@ -14,31 +27,25 @@ npm install
 npm run dev
 ```
 
-## Central history server
+Vite prints a local address such as `http://localhost:5173`. Open this address
+from your browser or phone (replace `localhost` with your computer's IP if
+accessing from another device).
 
-The server stores all synced games in `server/games.json`. Start it on your Mac
-or any machine on the local network:
+If the center server is running on a different host or port, set
+`VITE_SERVER_URL` accordingly:
 
 ```bash
-cd server
-npm install
-npm start
+VITE_SERVER_URL=http://192.168.0.5:3000 npm run dev
 ```
 
-Set the `PORT` environment variable if you need the server to listen on a
-different port.
+Use `npm run build` inside `/app` to create a production build in `app/dist`.
 
-By default the web app contacts `http://<app host>:3000`. You can set
-`VITE_SERVER_URL` to use a different address when running or building the
-frontend.
+### Connection status and history
 
-On startup the app checks connectivity and shows "已连接中心" in the status bar
-when the server responds. If the server is unreachable, the "同步到中心" and
-"中心历史" buttons will be disabled.
+The app shows "已连接中心" when it can reach the server. When disconnected the
+sync button and "中心历史" button are disabled.
 
-The local history screen allows filtering by date. After choosing a day you can
-click **同步所选日期到中心** to upload all games from that day to the server.
-The center history page defaults to showing today's date. At the top it displays
-the total gains for every player on the selected day. Each entry also has a
-**删除** button which asks for confirmation before removing the record from
-`games.json`.
+The local history page lets you filter games by date and upload them to the
+server with **同步所选日期到中心**. The center history page defaults to today and
+displays per-player totals. Each record has a **删除** button that asks for
+confirmation before removing it from `games.json`.
