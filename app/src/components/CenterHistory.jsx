@@ -32,7 +32,9 @@ function GameItem({ game, onDelete }) {
 
 export default function CenterHistory({ onBack }) {
   const [games, setGames] = useState([])
-  const [filterDate, setFilterDate] = useState('')
+  const [filterDate, setFilterDate] = useState(() =>
+    new Date().toISOString().slice(0, 10)
+  )
   const [error, setError] = useState(false)
 
   useEffect(() => {

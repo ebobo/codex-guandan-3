@@ -38,5 +38,7 @@ when the server responds. If the server is unreachable, the "同步到中心" an
 
 The local history screen allows filtering by date. After choosing a day you can
 click **同步所选日期到中心** to upload all games from that day to the server.
-On the center history page each entry has a **删除** button which asks for
-confirmation before removing the record from `games.json`.
+The center history page defaults to showing today's date. At the top it displays
+the total gains for every player on the selected day. Each entry also has a
+**删除** button which asks for confirmation before removing the record from
+`games.json`.
