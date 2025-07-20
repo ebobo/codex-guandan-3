@@ -85,6 +85,23 @@ function App() {
     setGame(newGame)
   }
 
+  const resetCurrent = () => {
+    const players = game.players.map(p => ({ ...p, score: 0 }))
+    setGame({ players, rounds: [], isFinished: false })
+  }
+
+  const undoLastRound = () => {
+    if (game.rounds.length === 0) return
+    const rounds = game.rounds.slice(0, -1)
+    const players = game.players.map(p => ({ ...p, score: 0 }))
+    rounds.forEach(r => {
+      players.find(p => p.name === r.first).score += 3
+      players.find(p => p.name === r.second).score += 1
+    })
+    const max = Math.max(...players.map(p => p.score))
+    setGame({ players, rounds, isFinished: max > 12 })
+  }
+
   if (showHistory) {
     return <History onBack={()=>setShowHistory(false)} />
   }
@@ -106,6 +123,8 @@ function App() {
       </table>
       <RoundForm players={game.players} onRecord={recordRound} disabled={game.isFinished} />
       <div className="actions">
+        <button onClick={undoLastRound} disabled={game.rounds.length===0}>撤销上局</button>
+        <button onClick={resetCurrent}>重置本局</button>
         <button onClick={()=>setShowSetup(true)}>设置玩家</button>
         <button onClick={()=>setShowHistory(true)}>查看历史</button>
       </div>
