@@ -64,3 +64,6 @@ body {
 .new-game-btn:hover {
   background-color: #219150;
 }
+.status {
+  margin-bottom: 1rem;
+}

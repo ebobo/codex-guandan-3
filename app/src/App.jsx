@@ -129,7 +129,7 @@ function App() {
 
   return (
     <div className='app'>
-      <h1>GuanDan Tracker</h1>
+      <h1>记分</h1>
       <div className='status'>
         第 {game.rounds.length + 1} 局{' '}
         {game.isFinished ? '已结束' : '尚未有人 > 12 分'}
