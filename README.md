@@ -30,3 +30,8 @@ The app expects the server to be reachable at `http://localhost:3000`.
 On startup the app checks connectivity and shows "已连接中心" in the status bar
 when the server responds. If the server is unreachable, the "同步到中心" and
 "中心历史" buttons will be disabled.
+
+The local history screen allows filtering by date. After choosing a day you can
+click **同步所选日期到中心** to upload all games from that day to the server.
+On the center history page each entry has a **删除** button which asks for
+confirmation before removing the record from `games.json`.

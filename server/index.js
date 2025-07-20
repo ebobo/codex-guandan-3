@@ -29,6 +29,13 @@ app.post('/games', (req, res) => {
   res.json({ success: true })
 })
 
+app.delete('/games/:timestamp', (req, res) => {
+  const ts = Number(req.params.timestamp)
+  games = games.filter((g) => g.timestamp !== ts)
+  fs.writeFileSync(dataFile, JSON.stringify(games, null, 2))
+  res.json({ success: true })
+})
+
 app.listen(PORT, () => {
   console.log(`Central server listening on port ${PORT}`)
 })

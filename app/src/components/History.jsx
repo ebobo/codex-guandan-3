@@ -31,6 +31,7 @@ function GameItem({ game }) {
 export default function History({ onBack }) {
   const [games] = useState(() => JSON.parse(localStorage.getItem('games')||'[]'))
   const [filterDate, setFilterDate] = useState('')
+  const [syncing, setSyncing] = useState(false)
   const filtered = games.filter(g => !filterDate || new Date(g.timestamp).toISOString().slice(0,10) === filterDate)
   const career = {}
   filtered.forEach(g => {
@@ -38,6 +39,27 @@ export default function History({ onBack }) {
       career[n]=(career[n]||0)+v
     })
   })
+
+  const syncFiltered = async () => {
+    if (!filterDate) return
+    if (!window.confirm(`同步 ${filterDate} 的所有记录到中心?`)) return
+    setSyncing(true)
+    for (const g of filtered) {
+      try {
+        await fetch('http://localhost:3000/games', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(g),
+        })
+      } catch {
+        alert('同步失败')
+        setSyncing(false)
+        return
+      }
+    }
+    setSyncing(false)
+    alert('同步完成')
+  }
   return (
     <div className="history">
       <button onClick={onBack}>返回</button>
@@ -52,6 +74,9 @@ export default function History({ onBack }) {
         {Object.entries(career).map(([n,v])=> (
           <span key={n} style={{marginRight:'1em'}}>{n}:{v>0?'+':''}{v}</span>
         ))}
+      </div>
+      <div>
+        <button onClick={syncFiltered} disabled={!filterDate || syncing}>同步所选日期到中心</button>
       </div>
       <ul>
         {filtered.map(g => <GameItem key={g.timestamp} game={g}/>)}

@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 
-function GameItem({ game }) {
+function GameItem({ game, onDelete }) {
   const [open, setOpen] = useState(false)
   const winner = [...game.players].sort((a,b)=> b.score - a.score || a.name.localeCompare(b.name))[0]
   return (
     <li className="game-item">
-      <div onClick={()=>setOpen(!open)} style={{cursor:'pointer'}}>
-        {new Date(game.timestamp).toLocaleString()} - 胜者:{winner.name} 用时{game.rounds.length}局
+      <div onClick={()=>setOpen(!open)} style={{cursor:'pointer',display:'flex',justifyContent:'space-between'}}>
+        <span>{new Date(game.timestamp).toLocaleString()} - 胜者:{winner.name} 用时{game.rounds.length}局</span>
+        <button onClick={e=>{e.stopPropagation(); onDelete(game.timestamp)}}>删除</button>
       </div>
       {open && (
         <div className="game-detail">
@@ -45,6 +46,12 @@ export default function CenterHistory({ onBack }) {
       })
   }, [])
 
+  const deleteGame = async (ts) => {
+    if (!window.confirm('确定要删除该记录吗？')) return
+    await fetch(`http://localhost:3000/games/${ts}`, { method: 'DELETE' })
+    setGames((gs) => gs.filter((g) => g.timestamp !== ts))
+  }
+
   const filtered = games.filter(g => !filterDate || new Date(g.timestamp).toISOString().slice(0,10) === filterDate)
 
   const career = {}
@@ -71,7 +78,9 @@ export default function CenterHistory({ onBack }) {
         ))}
       </div>
       <ul>
-        {filtered.map(g => <GameItem key={g.timestamp} game={g}/>)}
+        {filtered.map(g => (
+          <GameItem key={g.timestamp} game={g} onDelete={deleteGame} />
+        ))}
       </ul>
     </div>
   )
