@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SERVER_URL from '../serverConfig.js'
 
 function GameItem({ game }) {
@@ -29,65 +29,70 @@ function GameItem({ game }) {
   )
 }
 
-export default function History({ onBack }) {
-  const [games] = useState(() => JSON.parse(localStorage.getItem('games')||'[]'))
+export default function CenterHistory({ onBack }) {
+  const [games, setGames] = useState([])
   const [filterDate, setFilterDate] = useState(() =>
     new Date().toISOString().slice(0, 10)
   )
-  const [syncing, setSyncing] = useState(false)
+  const [error, setError] = useState(false)
 
-  const filtered = games.filter(g =>
-    !filterDate || new Date(g.timestamp).toISOString().slice(0,10) === filterDate
+  useEffect(() => {
+    fetch(`${SERVER_URL}/games`)
+      .then(r => r.json())
+      .then(data => {
+        setGames(data)
+        setError(false)
+      })
+      .catch(() => {
+        setError(true)
+      })
+  }, [])
+
+  const deleteDate = async () => {
+    if (!filterDate) return
+    if (!window.confirm(`删除 ${filterDate} 的所有记录吗？`)) return
+    await fetch(`${SERVER_URL}/games/date/${filterDate}`, { method: 'DELETE' })
+    setGames(gs =>
+      gs.filter(
+        g => new Date(g.timestamp).toISOString().slice(0,10) !== filterDate
+      )
+    )
+  }
+
+  const filtered = games.filter(
+    (g) => !filterDate || new Date(g.timestamp).toISOString().slice(0, 10) === filterDate
   )
 
   const totalCareer = {}
-  games.forEach(g => {
-    Object.entries(g.totalPay).forEach(([n,v]) => {
-      totalCareer[n]=(totalCareer[n]||0)+v
+  games.forEach((g) => {
+    Object.entries(g.totalPay).forEach(([n, v]) => {
+      totalCareer[n] = (totalCareer[n] || 0) + v
     })
   })
 
   const daily = {}
-  filtered.forEach(g => {
-    Object.entries(g.totalPay).forEach(([n,v]) => {
-      daily[n]=(daily[n]||0)+v
+  filtered.forEach((g) => {
+    Object.entries(g.totalPay).forEach(([n, v]) => {
+      daily[n] = (daily[n] || 0) + v
     })
   })
 
-  const syncFiltered = async () => {
-    if (!filterDate) return
-    if (!window.confirm(`同步 ${filterDate} 的所有记录到中心?`)) return
-    setSyncing(true)
-    for (const g of filtered) {
-      try {
-        await fetch(`${SERVER_URL}/games`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(g),
-        })
-      } catch {
-        alert('同步失败')
-        setSyncing(false)
-        return
-      }
-    }
-    setSyncing(false)
-    alert('同步完成')
-  }
   return (
     <div className="history">
       <button onClick={onBack}>返回</button>
-      <h2>历史记录</h2>
+      <h2>中心历史记录</h2>
+      {error && <div style={{color:'red'}}>无法连接中心服务器</div>}
       <div>
         生涯盈亏:
         {Object.entries(totalCareer).map(([n,v])=> (
           <span key={n} style={{marginRight:'1em'}}>{n}:{v>0?'+':''}{v}</span>
         ))}
       </div>
-      <div>
+      <div style={{display:'flex',alignItems:'center',gap:'0.5em'}}>
         <label>日期筛选:
           <input type="date" value={filterDate} onChange={e=>setFilterDate(e.target.value)} />
         </label>
+        <button onClick={deleteDate} disabled={!filterDate} title="删除当日记录">🗑️</button>
       </div>
       <div>
         单日盈亏:
@@ -95,11 +100,10 @@ export default function History({ onBack }) {
           <span key={n} style={{marginRight:'1em'}}>{n}:{v>0?'+':''}{v}</span>
         ))}
       </div>
-      <div>
-        <button onClick={syncFiltered} disabled={!filterDate || syncing}>同步所选日期到中心</button>
-      </div>
       <ul>
-        {filtered.map(g => <GameItem key={g.timestamp} game={g}/>)}
+        {filtered.map(g => (
+          <GameItem key={g.timestamp} game={g} />
+        ))}
       </ul>
     </div>
   )
