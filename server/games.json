@@ -1,1 +1,1009 @@
-[]
+[
+  {
+    "timestamp": 1753104634316,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 13,
+        "net": -5
+      },
+      {
+        "name": "Ellen",
+        "score": 12,
+        "net": -20
+      },
+      {
+        "name": "Qi",
+        "score": 15,
+        "net": 25
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Ellen",
+        "third": "Wu"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      }
+    ],
+    "totalPay": {
+      "Wu": -5,
+      "Ellen": -20,
+      "Qi": 25
+    }
+  },
+  {
+    "timestamp": 1753106741089,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 14,
+        "net": 90
+      },
+      {
+        "name": "Ellen",
+        "score": 5,
+        "net": -45
+      },
+      {
+        "name": "Qi",
+        "score": 5,
+        "net": -45
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      }
+    ],
+    "totalPay": {
+      "Wu": 90,
+      "Ellen": -45,
+      "Qi": -45
+    }
+  },
+  {
+    "timestamp": 1753109613328,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 15,
+        "net": 65
+      },
+      {
+        "name": "Ellen",
+        "score": 9,
+        "net": -25
+      },
+      {
+        "name": "Qi",
+        "score": 8,
+        "net": -40
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      },
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Qi",
+        "second": "Ellen",
+        "third": "Wu"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      }
+    ],
+    "totalPay": {
+      "Wu": 65,
+      "Ellen": -25,
+      "Qi": -40
+    }
+  },
+  {
+    "timestamp": 1753119897211,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 7,
+        "net": -35
+      },
+      {
+        "name": "Ellen",
+        "score": 14,
+        "net": 70
+      },
+      {
+        "name": "Qi",
+        "score": 7,
+        "net": -35
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      }
+    ],
+    "totalPay": {
+      "Wu": -35,
+      "Ellen": 70,
+      "Qi": -35
+    }
+  },
+  {
+    "timestamp": 1753122887557,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 13,
+        "net": 35
+      },
+      {
+        "name": "Ellen",
+        "score": 4,
+        "net": -100
+      },
+      {
+        "name": "Qi",
+        "score": 15,
+        "net": 65
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      },
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      }
+    ],
+    "totalPay": {
+      "Wu": 35,
+      "Ellen": -100,
+      "Qi": 65
+    }
+  },
+  {
+    "timestamp": 1753125807153,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 9,
+        "net": -25
+      },
+      {
+        "name": "Ellen",
+        "score": 14,
+        "net": 50
+      },
+      {
+        "name": "Qi",
+        "score": 9,
+        "net": -25
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Qi",
+        "second": "Ellen",
+        "third": "Wu"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      }
+    ],
+    "totalPay": {
+      "Wu": -25,
+      "Ellen": 50,
+      "Qi": -25
+    }
+  },
+  {
+    "timestamp": 1752930333788,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 4,
+        "net": -40
+      },
+      {
+        "name": "Ellen",
+        "score": 13,
+        "net": 95
+      },
+      {
+        "name": "Qi",
+        "score": 3,
+        "net": -55
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      }
+    ],
+    "totalPay": {
+      "Wu": -40,
+      "Ellen": 95,
+      "Qi": -55
+    }
+  },
+  {
+    "timestamp": 1752933036761,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 9,
+        "net": -5
+      },
+      {
+        "name": "Ellen",
+        "score": 5,
+        "net": -65
+      },
+      {
+        "name": "Qi",
+        "score": 14,
+        "net": 70
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Ellen",
+        "third": "Wu"
+      },
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      }
+    ],
+    "totalPay": {
+      "Wu": -5,
+      "Ellen": -65,
+      "Qi": 70
+    }
+  },
+  {
+    "timestamp": 1752934779074,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 4,
+        "net": -40
+      },
+      {
+        "name": "Ellen",
+        "score": 3,
+        "net": -55
+      },
+      {
+        "name": "Qi",
+        "score": 13,
+        "net": 95
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Ellen",
+        "third": "Wu"
+      },
+      {
+        "first": "Qi",
+        "second": "Ellen",
+        "third": "Wu"
+      },
+      {
+        "first": "Qi",
+        "second": "Ellen",
+        "third": "Wu"
+      },
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      }
+    ],
+    "totalPay": {
+      "Wu": -40,
+      "Ellen": -55,
+      "Qi": 95
+    }
+  },
+  {
+    "timestamp": 1752937495483,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 12,
+        "net": 40
+      },
+      {
+        "name": "Ellen",
+        "score": 15,
+        "net": 85
+      },
+      {
+        "name": "Qi",
+        "score": 1,
+        "net": -125
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      }
+    ],
+    "totalPay": {
+      "Wu": 40,
+      "Ellen": 85,
+      "Qi": -125
+    }
+  },
+  {
+    "timestamp": 1752940184005,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 7,
+        "net": -55
+      },
+      {
+        "name": "Ellen",
+        "score": 11,
+        "net": 5
+      },
+      {
+        "name": "Qi",
+        "score": 14,
+        "net": 50
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Ellen",
+        "third": "Wu"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      }
+    ],
+    "totalPay": {
+      "Wu": -55,
+      "Ellen": 5,
+      "Qi": 50
+    }
+  },
+  {
+    "timestamp": 1752952118991,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 11,
+        "net": 5
+      },
+      {
+        "name": "Ellen",
+        "score": 14,
+        "net": 50
+      },
+      {
+        "name": "Qi",
+        "score": 7,
+        "net": -55
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      }
+    ],
+    "totalPay": {
+      "Wu": 5,
+      "Ellen": 50,
+      "Qi": -55
+    }
+  },
+  {
+    "timestamp": 1753010715316,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 3,
+        "net": -75
+      },
+      {
+        "name": "Ellen",
+        "score": 13,
+        "net": 75
+      },
+      {
+        "name": "Qi",
+        "score": 8,
+        "net": 0
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Qi",
+        "second": "Ellen",
+        "third": "Wu"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      }
+    ],
+    "totalPay": {
+      "Wu": -75,
+      "Ellen": 75,
+      "Qi": 0
+    }
+  },
+  {
+    "timestamp": 1753013773472,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 10,
+        "net": -30
+      },
+      {
+        "name": "Ellen",
+        "score": 15,
+        "net": 45
+      },
+      {
+        "name": "Qi",
+        "score": 11,
+        "net": -15
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Qi",
+        "second": "Ellen",
+        "third": "Wu"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Qi",
+        "second": "Ellen",
+        "third": "Wu"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      }
+    ],
+    "totalPay": {
+      "Wu": -30,
+      "Ellen": 45,
+      "Qi": -15
+    }
+  },
+  {
+    "timestamp": 1753016408315,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 8,
+        "net": -20
+      },
+      {
+        "name": "Ellen",
+        "score": 7,
+        "net": -35
+      },
+      {
+        "name": "Qi",
+        "score": 13,
+        "net": 55
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Wu",
+        "second": "Qi",
+        "third": "Ellen"
+      },
+      {
+        "first": "Qi",
+        "second": "Ellen",
+        "third": "Wu"
+      },
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      }
+    ],
+    "totalPay": {
+      "Wu": -20,
+      "Ellen": -35,
+      "Qi": 55
+    }
+  },
+  {
+    "timestamp": 1753018472817,
+    "players": [
+      {
+        "name": "Wu",
+        "score": 6,
+        "net": -30
+      },
+      {
+        "name": "Ellen",
+        "score": 13,
+        "net": 75
+      },
+      {
+        "name": "Qi",
+        "score": 5,
+        "net": -45
+      }
+    ],
+    "rounds": [
+      {
+        "first": "Qi",
+        "second": "Wu",
+        "third": "Ellen"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Wu",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      },
+      {
+        "first": "Wu",
+        "second": "Ellen",
+        "third": "Qi"
+      },
+      {
+        "first": "Ellen",
+        "second": "Qi",
+        "third": "Wu"
+      }
+    ],
+    "totalPay": {
+      "Wu": -30,
+      "Ellen": 75,
+      "Qi": -45
+    }
+  }
+]
