@@ -49,7 +49,7 @@ If the center server is running on a different host or port, set
 `VITE_SERVER_URL` accordingly:
 
 ```bash
-VITE_SERVER_URL=http://192.168.0.5:3030 npm run dev
+VITE_SERVER_URL=http://10.0.0.115:3030 npm run dev
 ```
 
 Use `npm run build` inside `/app` to create a production build in `app/dist`.
