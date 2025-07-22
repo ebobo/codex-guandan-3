@@ -71,3 +71,8 @@ BackEnd API: 'https://guandan-score-api.onrender.com';
 Static Server: https://guandan-score-ui.onrender.com;
 The Render service is configured with the same GitHub environment variables so
 updates are pushed directly to the private repository.
+
+# use a private gitbub repo for save the game.json file
+
+Repository access: ebobo/guandan-3-data
+used a fine-grained token
