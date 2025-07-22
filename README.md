@@ -56,3 +56,8 @@ that day along with overall **生涯盈亏** totals. You can upload the selected
 date's games to the server with **同步所选日期到中心**. The center history page works
 the same way and provides a 🗑️ button next to the date picker to delete an
 entire day's records from `games.json`.
+
+## use Render host the service
+
+BackEnd API: 'https://guandan-score-api.onrender.com';  
+Static Server: https://guandan-score-ui.onrender.com;
