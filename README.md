@@ -8,13 +8,21 @@ included in `/server` for keeping a central history of games.
 
 ### 1. Start the center server
 
-All synced games are written to `server/games.json`. Run the server on your Mac
-or any machine on the same network:
+By default the server reads and writes `games.json` locally inside the `server`
+folder:
 
 ```bash
 cd server
 npm install
 npm start        # use PORT=4000 npm start to change the port
+```
+
+To store the file in a private GitHub repository instead, start the server with
+`GITHUB_TOKEN` and `GITHUB_REPO` (and optionally `GITHUB_BRANCH` and
+`GITHUB_FILE_PATH`):
+
+```bash
+GITHUB_TOKEN=<token> GITHUB_REPO=<owner/repo> npm start
 ```
 
 The server exposes a few JSON endpoints under `/games`:
@@ -59,5 +67,7 @@ entire day's records from `games.json`.
 
 ## use Render host the service
 
-BackEnd API: 'https://guandan-score-api.onrender.com';  
+BackEnd API: 'https://guandan-score-api.onrender.com';
 Static Server: https://guandan-score-ui.onrender.com;
+The Render service is configured with the same GitHub environment variables so
+updates are pushed directly to the private repository.
