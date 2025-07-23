@@ -172,6 +172,7 @@ export default function CenterHistory({ onBack }) {
                 ? 'record-day'
                 : undefined
             }
+            className='date-input'
           />
         </label>
         <button

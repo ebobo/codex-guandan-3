@@ -102,6 +102,9 @@ body {
   align-items: center;
   gap: 0.5rem;
 }
+.date-input {
+  width: 8rem;
+}
 .daily-line {
   margin-bottom: 1rem;
 }

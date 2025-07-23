@@ -108,6 +108,7 @@ export default function History({ onBack }) {
                 ? 'record-day'
                 : undefined
             }
+            className="date-input"
           />
         </label>
       </div>
