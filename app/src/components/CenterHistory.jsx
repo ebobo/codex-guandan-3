@@ -157,19 +157,16 @@ export default function CenterHistory({ onBack }) {
         </div>
       </div>
       <div className='date-filter'>
-        <label>
-          日期筛选:
-          <DatePicker
-            selected={filterDate ? new Date(filterDate) : null}
-            onChange={(d) => setFilterDate(d ? d.toISOString().slice(0, 10) : '')}
-            dateFormat='yyyy-MM-dd'
-            dayClassName={(date) =>
-              datesWithRecords.includes(date.toISOString().slice(0, 10))
-                ? 'record-day'
-                : undefined
-            }
-          />
-        </label>
+        <DatePicker
+          selected={filterDate ? new Date(filterDate) : null}
+          onChange={(d) => setFilterDate(d ? d.toISOString().slice(0, 10) : '')}
+          dateFormat='yyyy-MM-dd'
+          dayClassName={(date) =>
+            datesWithRecords.includes(date.toISOString().slice(0, 10))
+              ? 'record-day'
+              : undefined
+          }
+        />
         <div className='date-highlights'>
           {datesWithRecords.map((d) => (
             <span
