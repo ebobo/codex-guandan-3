@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import SERVER_URL from '../serverConfig.js';
 
 function GameItem({ game }) {
@@ -157,10 +159,15 @@ export default function CenterHistory({ onBack }) {
       <div className='date-filter'>
         <label>
           日期筛选:
-          <input
-            type='date'
-            value={filterDate}
-            onChange={(e) => setFilterDate(e.target.value)}
+          <DatePicker
+            selected={filterDate ? new Date(filterDate) : null}
+            onChange={(d) => setFilterDate(d ? d.toISOString().slice(0, 10) : '')}
+            dateFormat='yyyy-MM-dd'
+            dayClassName={(date) =>
+              datesWithRecords.includes(date.toISOString().slice(0, 10))
+                ? 'record-day'
+                : undefined
+            }
           />
         </label>
         <div className='date-highlights'>

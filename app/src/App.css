@@ -115,3 +115,8 @@ body {
   background-color: #e67e22;
   color: #fff;
 }
+
+.record-day {
+  background-color: #ffe7c4;
+  border-radius: 50%;
+}
