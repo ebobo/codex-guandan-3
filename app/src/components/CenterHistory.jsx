@@ -173,7 +173,6 @@ export default function CenterHistory({ onBack }) {
                 : undefined
             }
             className='date-input'
-            readOnly
           />
         </label>
         <button
