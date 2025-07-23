@@ -1,3 +1,9 @@
+function formatMoney(v) {
+  if (v > 0) return `+¥${v}`;
+  if (v < 0) return `-¥${Math.abs(v)}`;
+  return `¥${v}`;
+}
+
 export default function SettlementModal({ players, pay, pairPay, onNewGame, onSync, synced, canSync }) {
   return (
     <dialog open className='settlement-modal'>
@@ -8,7 +14,7 @@ export default function SettlementModal({ players, pay, pairPay, onNewGame, onSy
             ([other, amt]) =>
               amt > 0 && (
                 <div key={`${p.name}-${other}`} className='settlement-pay'>
-                  {p.name} 支付 {amt}元 给 {other}
+                  {p.name} 支付 {formatMoney(amt)} 给 {other}
                 </div>
               )
           )
@@ -17,8 +23,7 @@ export default function SettlementModal({ players, pay, pairPay, onNewGame, onSy
       <div>
         {players.map((p) => (
           <div key={p.name} className='settlement-score'>
-            {p.name}: {p.score}分 净{pay[p.name] > 0 ? '+' : ''}
-            {pay[p.name]}
+            {p.name}: {p.score}分 净{formatMoney(pay[p.name])}
           </div>
         ))}
       </div>
