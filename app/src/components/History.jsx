@@ -109,6 +109,7 @@ export default function History({ onBack }) {
                 : undefined
             }
             className="date-input"
+            readOnly
           />
         </label>
       </div>
