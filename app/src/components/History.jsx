@@ -3,6 +3,12 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import SERVER_URL from '../serverConfig.js'
 
+function formatMoney(v) {
+  if (v > 0) return `+¥${v}`
+  if (v < 0) return `-¥${Math.abs(v)}`
+  return `¥${v}`
+}
+
 function GameItem({ game }) {
   const [open, setOpen] = useState(false)
   const winner = [...game.players].sort((a,b)=> b.score - a.score || a.name.localeCompare(b.name))[0]
@@ -14,9 +20,9 @@ function GameItem({ game }) {
       {open && (
         <div className="game-detail">
           {game.players.map(p=>(
-            <div key={p.name}>{p.name}: {p.score}分 净{p.net>0?'+':''}{p.net}</div>
+            <div key={p.name}>{p.name}: {p.score}分 净{formatMoney(p.net)}</div>
           ))}
-          <div>支付结果:{Object.entries(game.totalPay).map(([n,v])=>`${n}:${v>0?'+':''}${v}`).join(' , ')}</div>
+          <div>支付结果:{Object.entries(game.totalPay).map(([n,v])=>`${n}:${formatMoney(v)}`).join(' , ')}</div>
           <details>
             <summary>回合明细</summary>
             <ol>
@@ -87,7 +93,7 @@ export default function History({ onBack }) {
       <div>
         生涯盈亏:
         {Object.entries(totalCareer).map(([n,v])=> (
-          <span key={n} style={{marginRight:'1em'}}>{n}:{v>0?'+':''}{v}</span>
+          <span key={n} style={{marginRight:'1em'}}>{n}:{formatMoney(v)}</span>
         ))}
       </div>
       <div>
@@ -108,7 +114,7 @@ export default function History({ onBack }) {
       <div>
         单日盈亏:
         {Object.entries(daily).map(([n,v])=> (
-          <span key={n} style={{marginRight:'1em'}}>{n}:{v>0?'+':''}{v}</span>
+          <span key={n} style={{marginRight:'1em'}}>{n}:{formatMoney(v)}</span>
         ))}
       </div>
       <div>

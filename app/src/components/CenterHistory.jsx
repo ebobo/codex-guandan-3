@@ -3,6 +3,12 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import SERVER_URL from '../serverConfig.js';
 
+function formatMoney(v) {
+  if (v > 0) return `+¥${v}`;
+  if (v < 0) return `-¥${Math.abs(v)}`;
+  return `¥${v}`;
+}
+
 function GameItem({ game }) {
   const [open, setOpen] = useState(false);
   const winner = [...game.players].sort(
@@ -18,14 +24,13 @@ function GameItem({ game }) {
         <div className='game-detail'>
           {game.players.map((p) => (
             <div key={p.name}>
-              {p.name}: {p.score}分 净{p.net > 0 ? '+' : ''}
-              {p.net}
+              {p.name}: {p.score}分 净{formatMoney(p.net)}
             </div>
           ))}
           <div>
             支付结果:
             {Object.entries(game.totalPay)
-              .map(([n, v]) => `${n}:${v > 0 ? '+' : ''}${v}`)
+              .map(([n, v]) => `${n}:${formatMoney(v)}`)
               .join(' , ')}
           </div>
           <details>
@@ -134,8 +139,7 @@ export default function CenterHistory({ onBack }) {
           生涯盈亏:
           {Object.entries(totalCareer).map(([n, v]) => (
             <span key={n} style={{ marginRight: '1em' }}>
-              {n}:{v > 0 ? '+' : ''}
-              {v}
+              {n}:{formatMoney(v)}
             </span>
           ))}
         </div>
@@ -182,8 +186,7 @@ export default function CenterHistory({ onBack }) {
         单日盈亏:
         {Object.entries(daily).map(([n, v]) => (
           <span key={n} style={{ marginRight: '1em' }}>
-            {n}:{v > 0 ? '+' : ''}
-            {v}
+            {n}:{formatMoney(v)}
           </span>
         ))}
       </div>
