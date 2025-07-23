@@ -77,24 +77,77 @@ export default function CenterHistory({ onBack }) {
     })
   })
 
+  // calculate win rates
+  const gameWins = {}
+  const netWins = {}
+  const gamesPlayed = {}
+  const roundWins = {}
+  let totalRounds = 0
+  games.forEach(g => {
+    const winner = [...g.players].sort((a,b)=> b.score - a.score || a.name.localeCompare(b.name))[0]
+    gameWins[winner.name] = (gameWins[winner.name] || 0) + 1
+    g.players.forEach(p => {
+      gamesPlayed[p.name] = (gamesPlayed[p.name] || 0) + 1
+      if (g.totalPay[p.name] > 0) {
+        netWins[p.name] = (netWins[p.name] || 0) + 1
+      }
+    })
+    g.rounds.forEach(r => {
+      roundWins[r.first] = (roundWins[r.first] || 0) + 1
+      totalRounds += 1
+    })
+  })
+
+  const winRates = {}
+  Object.keys(gamesPlayed).forEach(name => {
+    const w = (gameWins[name] || 0)
+    const nw = (netWins[name] || 0)
+    const rw = (roundWins[name] || 0)
+    winRates[name] = {
+      winRate: gamesPlayed[name] ? ((nw / gamesPlayed[name]) * 100).toFixed(1) : '0',
+      gameWinRate: games.length ? ((w / games.length) * 100).toFixed(1) : '0',
+      roundWinRate: totalRounds ? ((rw / totalRounds) * 100).toFixed(1) : '0',
+    }
+  })
+
   return (
     <div className="history">
       <button onClick={onBack}>返回</button>
       <h2>中心历史记录</h2>
       {error && <div style={{color:'red'}}>无法连接中心服务器</div>}
-      <div>
-        生涯盈亏:
-        {Object.entries(totalCareer).map(([n,v])=> (
-          <span key={n} style={{marginRight:'1em'}}>{n}:{v>0?'+':''}{v}</span>
-        ))}
+      <div className="history-summary">
+        <div className="career-line">
+          生涯盈亏:
+          {Object.entries(totalCareer).map(([n,v])=> (
+            <span key={n} style={{marginRight:'1em'}}>{n}:{v>0?'+':''}{v}</span>
+          ))}
+        </div>
+        <div className="rate-line">
+          胜率:
+          {Object.entries(winRates).map(([n,r]) => (
+            <span key={n} style={{marginRight:'1em'}}>{n}:{r.winRate}%</span>
+          ))}
+        </div>
+        <div className="rate-line">
+          局胜率:
+          {Object.entries(winRates).map(([n,r]) => (
+            <span key={n} style={{marginRight:'1em'}}>{n}:{r.roundWinRate}%</span>
+          ))}
+        </div>
+        <div className="rate-line">
+          game 胜率:
+          {Object.entries(winRates).map(([n,r]) => (
+            <span key={n} style={{marginRight:'1em'}}>{n}:{r.gameWinRate}%</span>
+          ))}
+        </div>
       </div>
-      <div style={{display:'flex',alignItems:'center',gap:'0.5em'}}>
+      <div className="date-filter">
         <label>日期筛选:
           <input type="date" value={filterDate} onChange={e=>setFilterDate(e.target.value)} />
         </label>
         <button onClick={deleteDate} disabled={!filterDate} title="删除当日记录">🗑️</button>
       </div>
-      <div>
+      <div className="daily-line">
         单日盈亏:
         {Object.entries(daily).map(([n,v])=> (
           <span key={n} style={{marginRight:'1em'}}>{n}:{v>0?'+':''}{v}</span>
