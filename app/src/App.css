@@ -104,6 +104,7 @@ body {
 }
 .date-input {
   width: 8rem;
+  font-size: 1rem; /* prevent iOS zoom on focus */
 }
 .daily-line {
   margin-bottom: 1rem;
