@@ -49,6 +49,10 @@ export default function CenterHistory({ onBack }) {
   );
   const [error, setError] = useState(false);
 
+  const datesWithRecords = Array.from(
+    new Set(games.map((g) => new Date(g.timestamp).toISOString().slice(0, 10)))
+  ).sort();
+
   useEffect(() => {
     fetch(`${SERVER_URL}/games`)
       .then((r) => r.json())
@@ -94,8 +98,6 @@ export default function CenterHistory({ onBack }) {
 
   // calculate win rates
   const gameWins = {};
-  const netWins = {};
-  const gamesPlayed = {};
   const roundWins = {};
   let totalRounds = 0;
   games.forEach((g) => {
@@ -103,27 +105,18 @@ export default function CenterHistory({ onBack }) {
       (a, b) => b.score - a.score || a.name.localeCompare(b.name)
     )[0];
     gameWins[winner.name] = (gameWins[winner.name] || 0) + 1;
-    g.players.forEach((p) => {
-      gamesPlayed[p.name] = (gamesPlayed[p.name] || 0) + 1;
-      if (g.totalPay[p.name] > 0) {
-        netWins[p.name] = (netWins[p.name] || 0) + 1;
-      }
-    });
     g.rounds.forEach((r) => {
       roundWins[r.first] = (roundWins[r.first] || 0) + 1;
       totalRounds += 1;
     });
   });
 
+  const allNames = Object.keys(totalCareer);
   const winRates = {};
-  Object.keys(gamesPlayed).forEach((name) => {
+  allNames.forEach((name) => {
     const w = gameWins[name] || 0;
-    const nw = netWins[name] || 0;
     const rw = roundWins[name] || 0;
     winRates[name] = {
-      winRate: gamesPlayed[name]
-        ? ((nw / gamesPlayed[name]) * 100).toFixed(1)
-        : '0',
       gameWinRate: games.length ? ((w / games.length) * 100).toFixed(1) : '0',
       roundWinRate: totalRounds ? ((rw / totalRounds) * 100).toFixed(1) : '0',
     };
@@ -132,7 +125,7 @@ export default function CenterHistory({ onBack }) {
   return (
     <div className='history'>
       <button onClick={onBack}>返回</button>
-      <h2>中心历史记录</h2>
+      <h2>云端历史记录</h2>
       {error && <div style={{ color: 'red' }}>无法连接中心服务器</div>}
       <div className='history-summary'>
         <div className='career-line'>
@@ -141,14 +134,6 @@ export default function CenterHistory({ onBack }) {
             <span key={n} style={{ marginRight: '1em' }}>
               {n}:{v > 0 ? '+' : ''}
               {v}
-            </span>
-          ))}
-        </div>
-        <div className='rate-line'>
-          胜率:
-          {Object.entries(winRates).map(([n, r]) => (
-            <span key={n} style={{ marginRight: '1em' }}>
-              {n}:{r.winRate}%
             </span>
           ))}
         </div>
@@ -178,6 +163,17 @@ export default function CenterHistory({ onBack }) {
             onChange={(e) => setFilterDate(e.target.value)}
           />
         </label>
+        <div className='date-highlights'>
+          {datesWithRecords.map((d) => (
+            <span
+              key={d}
+              onClick={() => setFilterDate(d)}
+              className={d === filterDate ? 'selected-date' : 'available-date'}
+            >
+              {d}
+            </span>
+          ))}
+        </div>
         <button
           onClick={deleteDate}
           disabled={!filterDate}

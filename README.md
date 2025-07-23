@@ -57,11 +57,11 @@ Use `npm run build` inside `/app` to create a production build in `app/dist`.
 ### Connection status and history
 
 The app shows "已连接中心" when it can reach the server. When disconnected the
-sync button and "中心历史" button are disabled.
+sync button and "云端记录" button are disabled.
 
 The local history page now defaults to today's date and shows **单日盈亏** for
 that day along with overall **生涯盈亏** totals. You can upload the selected
-date's games to the server with **同步所选日期到中心**. The center history page works
+date's games to the server with **同步所选日期到中心**. The cloud history page works
 the same way and provides a 🗑️ button next to the date picker to delete an
 entire day's records from `games.json`.
 
