@@ -209,12 +209,12 @@ function App() {
         </button>
         <button onClick={resetCurrent}>重置本局</button>
         <button onClick={() => setShowSetup(true)}>设置玩家</button>
-        <button onClick={() => setShowHistory(true)}>查看历史</button>
+        <button onClick={() => setShowHistory(true)}>本地记录</button>
         <button
           onClick={() => setShowCenterHistory(true)}
           disabled={!serverConnected}
         >
-          中心历史
+          云端记录
         </button>
       </div>
       {showSetup && (

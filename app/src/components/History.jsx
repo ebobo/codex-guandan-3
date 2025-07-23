@@ -36,6 +36,10 @@ export default function History({ onBack }) {
   )
   const [syncing, setSyncing] = useState(false)
 
+  const datesWithRecords = Array.from(
+    new Set(games.map(g => new Date(g.timestamp).toISOString().slice(0,10)))
+  ).sort()
+
   const filtered = games.filter(g =>
     !filterDate || new Date(g.timestamp).toISOString().slice(0,10) === filterDate
   )
@@ -77,7 +81,7 @@ export default function History({ onBack }) {
   return (
     <div className="history">
       <button onClick={onBack}>返回</button>
-      <h2>历史记录</h2>
+      <h2>本地历史记录</h2>
       <div>
         生涯盈亏:
         {Object.entries(totalCareer).map(([n,v])=> (
@@ -88,6 +92,17 @@ export default function History({ onBack }) {
         <label>日期筛选:
           <input type="date" value={filterDate} onChange={e=>setFilterDate(e.target.value)} />
         </label>
+        <div className="date-highlights">
+          {datesWithRecords.map(d => (
+            <span
+              key={d}
+              onClick={() => setFilterDate(d)}
+              className={d === filterDate ? 'selected-date' : 'available-date'}
+            >
+              {d}
+            </span>
+          ))}
+        </div>
       </div>
       <div>
         单日盈亏:
