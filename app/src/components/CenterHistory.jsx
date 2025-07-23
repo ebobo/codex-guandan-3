@@ -4,9 +4,17 @@ import 'react-datepicker/dist/react-datepicker.css';
 import SERVER_URL from '../serverConfig.js';
 
 function formatMoney(v) {
-  if (v > 0) return `+¥${v}`;
+  if (v > 0) return `¥${v}`;
   if (v < 0) return `-¥${Math.abs(v)}`;
   return `¥${v}`;
+}
+
+function DateButton({ value, onClick }) {
+  return (
+    <button type='button' className='date-input' onClick={onClick}>
+      {value || '选择日期'}
+    </button>
+  );
 }
 
 function GameItem({ game }) {
@@ -165,14 +173,16 @@ export default function CenterHistory({ onBack }) {
           日期筛选:
           <DatePicker
             selected={filterDate ? new Date(filterDate) : null}
-            onChange={(d) => setFilterDate(d ? d.toISOString().slice(0, 10) : '')}
+            onChange={(d) =>
+              setFilterDate(d ? d.toISOString().slice(0, 10) : '')
+            }
             dateFormat='yyyy-MM-dd'
             dayClassName={(date) =>
               datesWithRecords.includes(date.toISOString().slice(0, 10))
                 ? 'record-day'
                 : undefined
             }
-            className='date-input'
+            customInput={<DateButton value={filterDate} />}
           />
         </label>
         <button
