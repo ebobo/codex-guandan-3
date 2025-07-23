@@ -54,7 +54,9 @@ export default function RoundForm({ players, onRecord, disabled }) {
       </div>
       <div className='round-form-row'>
         <span className='round-label'>末游:</span>
-        <span className='round-third'>{third}</span>
+        <span className='round-third'>
+          {third || <span style={{ opacity: 0 }}>占位</span>}
+        </span>
       </div>
       <button onClick={handleRecord} disabled={disabled}>
         记录本局
