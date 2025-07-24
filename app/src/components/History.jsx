@@ -140,6 +140,7 @@ export default function History({ onBack }) {
           </span>
         ))}
       </div>
+      <div>当日对局次数: {filtered.length}</div>
       <div>
         <button onClick={syncFiltered} disabled={!filterDate || syncing}>
           同步所选日期到中心
