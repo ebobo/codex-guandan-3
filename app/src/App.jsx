@@ -58,6 +58,20 @@ function App() {
   const [showCenterHistory, setShowCenterHistory] = useState(false);
   const [isSynced, setIsSynced] = useState(false);
   const [serverConnected, setServerConnected] = useState(false);
+  const [started, setStarted] = useState(
+    () => localStorage.getItem('gameStarted') === 'true'
+  );
+  const [startTime, setStartTime] = useState(() => {
+    const v = localStorage.getItem('gameStartTime');
+    return v ? parseInt(v, 10) : null;
+  });
+  const [elapsed, setElapsed] = useState(() => {
+    const v = localStorage.getItem('gameStartTime');
+    if (localStorage.getItem('gameStarted') === 'true' && v) {
+      return Date.now() - parseInt(v, 10);
+    }
+    return 0;
+  });
 
   const checkServer = () => {
     fetch(`${SERVER_URL}/games`)
@@ -68,6 +82,26 @@ function App() {
   useEffect(() => {
     saveCurrent(game);
   }, [game]);
+
+  useEffect(() => {
+    if (started) {
+      localStorage.setItem('gameStarted', 'true');
+      if (startTime) {
+        localStorage.setItem('gameStartTime', String(startTime));
+      }
+    } else {
+      localStorage.removeItem('gameStarted');
+      localStorage.removeItem('gameStartTime');
+    }
+  }, [started, startTime]);
+
+  useEffect(() => {
+    if (!started) return;
+    const id = setInterval(() => {
+      setElapsed(Date.now() - startTime);
+    }, 1000);
+    return () => clearInterval(id);
+  }, [started, startTime]);
 
   useEffect(() => {
     checkServer();
@@ -162,6 +196,41 @@ function App() {
     setGame({ players, rounds, isFinished: max > 12 });
   };
 
+  const startGame = () => {
+    setStartTime(Date.now());
+    setElapsed(0);
+    setStarted(true);
+  };
+
+  const stopGame = () => {
+    setStarted(false);
+    setElapsed(0);
+    setStartTime(null);
+  };
+
+  if (!started) {
+    return (
+      <div className='app'>
+        <h1>记分</h1>
+        <img src='/pwa-512.png' alt='logo' className='welcome-logo' />
+        <button onClick={startGame} className='start-btn'>开始游戏</button>
+        <div className='actions'>
+          <button onClick={() => setShowHistory(true)}>本地记录</button>
+          <button
+            onClick={() => setShowCenterHistory(true)}
+            disabled={!serverConnected}
+          >
+            云端记录
+          </button>
+        </div>
+        {showHistory && <History onBack={() => setShowHistory(false)} />}
+        {showCenterHistory && (
+          <CenterHistory onBack={() => setShowCenterHistory(false)} />
+        )}
+      </div>
+    );
+  }
+
   if (showCenterHistory) {
     return <CenterHistory onBack={() => setShowCenterHistory(false)} />;
   }
@@ -177,9 +246,10 @@ function App() {
     <div className='app'>
       <h1>记分</h1>
       <div className='status'>
+        用时 {String(Math.floor(elapsed / 3600000)).padStart(2, '0')}:
+        {String(Math.floor((elapsed % 3600000) / 60000)).padStart(2, '0')} {' | '}
         第 {game.rounds.length + 1} 局{' '}
-        {game.isFinished ? '已结束' : '尚未有人 > 12 分'}
-        {' | '}
+        {game.isFinished ? '已结束' : '尚未有人 > 12 分'}{' | '}
         {serverConnected ? '已连接中心' : '未连接中心'}
       </div>
       <table className='scoreboard'>
@@ -204,6 +274,7 @@ function App() {
         disabled={game.isFinished}
       />
       <div className='actions'>
+        <button onClick={stopGame} className='stop-btn'>结束游戏</button>
         <button onClick={undoLastRound} disabled={game.rounds.length === 0}>
           撤销上局
         </button>

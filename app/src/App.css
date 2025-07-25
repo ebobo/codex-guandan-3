@@ -119,3 +119,29 @@ body {
   background-color: #ffe7c4;
   border-radius: 50%;
 }
+
+.start-btn {
+  background-color: #66bb6a; /* darker green */
+  color: #fff;
+  border: none;
+}
+
+.start-btn:hover {
+  background-color: #5ca65c;
+}
+
+.stop-btn {
+  background-color: #ffa726; /* orangish */
+  color: #fff;
+  border: none;
+}
+
+.stop-btn:hover {
+  background-color: #fb8c00;
+}
+
+.welcome-logo {
+  width: 150px;
+  margin: 1rem auto;
+  display: block;
+}
