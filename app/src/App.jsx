@@ -189,7 +189,7 @@ function App() {
     return (
       <div className='app'>
         <h1>记分</h1>
-        <button onClick={startGame}>开始游戏</button>
+        <button onClick={startGame} className='start-btn'>开始游戏</button>
         <div className='actions'>
           <button onClick={() => setShowHistory(true)}>本地记录</button>
           <button
@@ -250,7 +250,7 @@ function App() {
         disabled={game.isFinished}
       />
       <div className='actions'>
-        <button onClick={stopGame}>停止计时</button>
+        <button onClick={stopGame} className='stop-btn'>结束游戏</button>
         <button onClick={undoLastRound} disabled={game.rounds.length === 0}>
           撤销上局
         </button>

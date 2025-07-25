@@ -119,3 +119,23 @@ body {
   background-color: #ffe7c4;
   border-radius: 50%;
 }
+
+.start-btn {
+  background-color: #2ecc71;
+  color: #fff;
+  border: none;
+}
+
+.start-btn:hover {
+  background-color: #27ae60;
+}
+
+.stop-btn {
+  background-color: #e67e22;
+  color: #fff;
+  border: none;
+}
+
+.stop-btn:hover {
+  background-color: #d35400;
+}
