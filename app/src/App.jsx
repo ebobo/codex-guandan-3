@@ -212,8 +212,10 @@ function App() {
     return (
       <div className='app'>
         <h1>记分</h1>
-        <img src='/pwa-512.png' alt='logo' className='welcome-logo' />
-        <button onClick={startGame} className='start-btn'>开始游戏</button>
+        <img src='/guandan_500.png' alt='logo' className='welcome-logo' />
+        <button onClick={startGame} className='start-btn'>
+          开始游戏
+        </button>
         <div className='actions'>
           <button onClick={() => setShowHistory(true)}>本地记录</button>
           <button
@@ -247,9 +249,10 @@ function App() {
       <h1>记分</h1>
       <div className='status'>
         用时 {String(Math.floor(elapsed / 3600000)).padStart(2, '0')}:
-        {String(Math.floor((elapsed % 3600000) / 60000)).padStart(2, '0')} {' | '}
-        第 {game.rounds.length + 1} 局{' '}
-        {game.isFinished ? '已结束' : '尚未有人 > 12 分'}{' | '}
+        {String(Math.floor((elapsed % 3600000) / 60000)).padStart(2, '0')}{' '}
+        {' | '}第 {game.rounds.length + 1} 局{' '}
+        {game.isFinished ? '已结束' : '尚未有人 > 12 分'}
+        {' | '}
         {serverConnected ? '已连接中心' : '未连接中心'}
       </div>
       <table className='scoreboard'>
@@ -274,7 +277,9 @@ function App() {
         disabled={game.isFinished}
       />
       <div className='actions'>
-        <button onClick={stopGame} className='stop-btn'>结束游戏</button>
+        <button onClick={stopGame} className='stop-btn'>
+          结束游戏
+        </button>
         <button onClick={undoLastRound} disabled={game.rounds.length === 0}>
           撤销上局
         </button>
