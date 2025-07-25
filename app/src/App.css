@@ -121,13 +121,13 @@ body {
 }
 
 .start-btn {
-  background-color: #90ee90; /* light green */
+  background-color: #66bb6a; /* darker green */
   color: #fff;
   border: none;
 }
 
 .start-btn:hover {
-  background-color: #7ecf7e;
+  background-color: #5ca65c;
 }
 
 .stop-btn {
@@ -138,4 +138,10 @@ body {
 
 .stop-btn:hover {
   background-color: #fb8c00;
+}
+
+.welcome-logo {
+  width: 150px;
+  margin: 1rem auto;
+  display: block;
 }

@@ -58,9 +58,20 @@ function App() {
   const [showCenterHistory, setShowCenterHistory] = useState(false);
   const [isSynced, setIsSynced] = useState(false);
   const [serverConnected, setServerConnected] = useState(false);
-  const [started, setStarted] = useState(false);
-  const [startTime, setStartTime] = useState(null);
-  const [elapsed, setElapsed] = useState(0);
+  const [started, setStarted] = useState(
+    () => localStorage.getItem('gameStarted') === 'true'
+  );
+  const [startTime, setStartTime] = useState(() => {
+    const v = localStorage.getItem('gameStartTime');
+    return v ? parseInt(v, 10) : null;
+  });
+  const [elapsed, setElapsed] = useState(() => {
+    const v = localStorage.getItem('gameStartTime');
+    if (localStorage.getItem('gameStarted') === 'true' && v) {
+      return Date.now() - parseInt(v, 10);
+    }
+    return 0;
+  });
 
   const checkServer = () => {
     fetch(`${SERVER_URL}/games`)
@@ -71,6 +82,18 @@ function App() {
   useEffect(() => {
     saveCurrent(game);
   }, [game]);
+
+  useEffect(() => {
+    if (started) {
+      localStorage.setItem('gameStarted', 'true');
+      if (startTime) {
+        localStorage.setItem('gameStartTime', String(startTime));
+      }
+    } else {
+      localStorage.removeItem('gameStarted');
+      localStorage.removeItem('gameStartTime');
+    }
+  }, [started, startTime]);
 
   useEffect(() => {
     if (!started) return;
@@ -189,6 +212,7 @@ function App() {
     return (
       <div className='app'>
         <h1>记分</h1>
+        <img src='/pwa-512.png' alt='logo' className='welcome-logo' />
         <button onClick={startGame} className='start-btn'>开始游戏</button>
         <div className='actions'>
           <button onClick={() => setShowHistory(true)}>本地记录</button>
