@@ -222,7 +222,7 @@ function App() {
     <div className='app'>
       <h1>记分</h1>
       <div className='status'>
-        用时 {Math.floor(elapsed / 3600000)}:
+        用时 {String(Math.floor(elapsed / 3600000)).padStart(2, '0')}:
         {String(Math.floor((elapsed % 3600000) / 60000)).padStart(2, '0')} {' | '}
         第 {game.rounds.length + 1} 局{' '}
         {game.isFinished ? '已结束' : '尚未有人 > 12 分'}{' | '}
