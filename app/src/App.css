@@ -121,21 +121,21 @@ body {
 }
 
 .start-btn {
-  background-color: #2ecc71;
+  background-color: #90ee90; /* light green */
   color: #fff;
   border: none;
 }
 
 .start-btn:hover {
-  background-color: #27ae60;
+  background-color: #7ecf7e;
 }
 
 .stop-btn {
-  background-color: #e67e22;
+  background-color: #ffa726; /* orangish */
   color: #fff;
   border: none;
 }
 
 .stop-btn:hover {
-  background-color: #d35400;
+  background-color: #fb8c00;
 }
