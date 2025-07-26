@@ -9,6 +9,12 @@ function formatMoney(v) {
   return `¥${v}`;
 }
 
+function formatDuration(ms) {
+  const h = Math.floor(ms / 3600000);
+  const m = Math.floor((ms % 3600000) / 60000);
+  return `${h}小时${m}分`;
+}
+
 function DateButton({ value, onClick }) {
   return (
     <button type='button' className='date-input' onClick={onClick}>
@@ -25,8 +31,8 @@ function GameItem({ game }) {
   return (
     <li className='game-item'>
       <div onClick={() => setOpen(!open)} style={{ cursor: 'pointer' }}>
-        {new Date(game.timestamp).toLocaleString()} - 胜者:{winner.name} 用时
-        {game.rounds.length}局
+        {new Date(game.timestamp).toLocaleString()} - 胜者:{winner.name} 共
+        {game.rounds.length}局 用时{formatDuration(game.duration || 0)}
       </div>
       {open && (
         <div className='game-detail'>
@@ -109,6 +115,10 @@ export default function CenterHistory({ onBack }) {
     Object.entries(g.totalPay).forEach(([n, v]) => {
       daily[n] = (daily[n] || 0) + v;
     });
+  });
+  let dailyDuration = 0;
+  filtered.forEach((g) => {
+    dailyDuration += g.duration || 0;
   });
 
   // calculate win rates
@@ -201,6 +211,7 @@ export default function CenterHistory({ onBack }) {
           </span>
         ))}
       </div>
+      <div className='daily-line'>当日游戏时长: {formatDuration(dailyDuration)}</div>
       <ul>
         {filtered.map((g) => (
           <GameItem key={g.timestamp} game={g} />
