@@ -65,6 +65,10 @@ function App() {
     const v = localStorage.getItem('gameStartTime');
     return v ? parseInt(v, 10) : null;
   });
+  const [gameStart, setGameStart] = useState(() => {
+    const v = localStorage.getItem('currentGameStart');
+    return v ? parseInt(v, 10) : null;
+  });
   const [elapsed, setElapsed] = useState(() => {
     const v = localStorage.getItem('gameStartTime');
     if (localStorage.getItem('gameStarted') === 'true' && v) {
@@ -89,11 +93,15 @@ function App() {
       if (startTime) {
         localStorage.setItem('gameStartTime', String(startTime));
       }
+      if (gameStart) {
+        localStorage.setItem('currentGameStart', String(gameStart));
+      }
     } else {
       localStorage.removeItem('gameStarted');
       localStorage.removeItem('gameStartTime');
+      localStorage.removeItem('currentGameStart');
     }
-  }, [started, startTime]);
+  }, [started, startTime, gameStart]);
 
   useEffect(() => {
     if (!started) return;
@@ -138,6 +146,7 @@ function App() {
     const stored = JSON.parse(localStorage.getItem('games') || '[]');
     stored.unshift({
       timestamp: Date.now(),
+      duration: gameStart ? Date.now() - gameStart : 0,
       players: finishedPlayers,
       rounds: game.rounds,
       totalPay: pay,
@@ -151,6 +160,7 @@ function App() {
     const newGame = { players: freshPlayers, rounds: [], isFinished: false };
     setGame(newGame);
     setIsSynced(false);
+    setGameStart(Date.now());
   };
 
   const syncGame = async () => {
@@ -161,6 +171,7 @@ function App() {
     }));
     const body = {
       timestamp: Date.now(),
+      duration: gameStart ? Date.now() - gameStart : 0,
       players: finishedPlayers,
       rounds: game.rounds,
       totalPay: pay,
@@ -198,6 +209,7 @@ function App() {
 
   const startGame = () => {
     setStartTime(Date.now());
+    setGameStart(Date.now());
     setElapsed(0);
     setStarted(true);
   };
@@ -206,9 +218,16 @@ function App() {
     setStarted(false);
     setElapsed(0);
     setStartTime(null);
+    setGameStart(null);
   };
 
   if (!started) {
+    if (showCenterHistory) {
+      return <CenterHistory onBack={() => setShowCenterHistory(false)} />;
+    }
+    if (showHistory) {
+      return <History onBack={() => setShowHistory(false)} />;
+    }
     return (
       <div className='app'>
         <h1>记分</h1>
@@ -225,10 +244,6 @@ function App() {
             云端记录
           </button>
         </div>
-        {showHistory && <History onBack={() => setShowHistory(false)} />}
-        {showCenterHistory && (
-          <CenterHistory onBack={() => setShowCenterHistory(false)} />
-        )}
       </div>
     );
   }
