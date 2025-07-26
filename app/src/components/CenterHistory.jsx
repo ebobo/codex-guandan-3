@@ -32,7 +32,7 @@ function GameItem({ game }) {
     <li className='game-item'>
       <div onClick={() => setOpen(!open)} style={{ cursor: 'pointer' }}>
         {new Date(game.timestamp).toLocaleString()} - 胜者:{winner.name} 共
-        {game.rounds.length}局 用时{formatDuration(game.duration || 0)}
+        {game.rounds.length}局
       </div>
       {open && (
         <div className='game-detail'>
