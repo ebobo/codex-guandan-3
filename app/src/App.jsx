@@ -53,15 +53,41 @@ function calculatePairPay(players) {
 }
 
 function calculatePairPayTotals(players, totals) {
+  // players with negative totals owe money, positive totals receive money
+  const payers = [];
+  const receivers = [];
+
+  players.forEach((p) => {
+    const amt = totals[p.name] || 0;
+    if (amt < 0) {
+      payers.push({ name: p.name, remain: -amt });
+    } else if (amt > 0) {
+      receivers.push({ name: p.name, remain: amt });
+    }
+  });
+
   const result = {};
   players.forEach((p) => {
     result[p.name] = {};
     players.forEach((q) => {
       if (p.name === q.name) return;
-      const diff = totals[q.name] - totals[p.name];
-      result[p.name][q.name] = diff > 0 ? diff : 0;
+      result[p.name][q.name] = 0;
     });
   });
+
+  for (const payer of payers) {
+    for (const receiver of receivers) {
+      if (payer.remain === 0) break;
+      if (receiver.remain === 0) continue;
+      const amt = Math.min(payer.remain, receiver.remain);
+      if (amt > 0) {
+        result[payer.name][receiver.name] += amt;
+        payer.remain -= amt;
+        receiver.remain -= amt;
+      }
+    }
+  }
+
   return result;
 }
 
