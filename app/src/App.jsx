@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import PlayerSetupDialog from './components/PlayerSetupDialog.jsx';
 import RoundForm from './components/RoundForm.jsx';
 import SettlementModal from './components/SettlementModal.jsx';
+import TotalSettlementModal from './components/TotalSettlementModal.jsx';
 import History from './components/History.jsx';
 import CenterHistory from './components/CenterHistory.jsx';
 import SERVER_URL from './serverConfig.js';
@@ -51,6 +52,19 @@ function calculatePairPay(players) {
   return result;
 }
 
+function calculatePairPayTotals(players, totals) {
+  const result = {};
+  players.forEach((p) => {
+    result[p.name] = {};
+    players.forEach((q) => {
+      if (p.name === q.name) return;
+      const diff = totals[q.name] - totals[p.name];
+      result[p.name][q.name] = diff > 0 ? diff : 0;
+    });
+  });
+  return result;
+}
+
 function App() {
   const [game, setGame] = useState(loadCurrent);
   const [showSetup, setShowSetup] = useState(false);
@@ -76,6 +90,9 @@ function App() {
     }
     return 0;
   });
+  const [showSessionSettlement, setShowSessionSettlement] = useState(false);
+  const [sessionPay, setSessionPay] = useState({});
+  const [sessionPairPay, setSessionPairPay] = useState({});
 
   const checkServer = () => {
     fetch(`${SERVER_URL}/games`)
@@ -214,11 +231,31 @@ function App() {
     setStarted(true);
   };
 
-  const stopGame = () => {
+  const finalizeStopGame = () => {
+    setShowSessionSettlement(false);
     setStarted(false);
     setElapsed(0);
     setStartTime(null);
     setGameStart(null);
+  };
+
+  const stopGame = () => {
+    const payCurrent = calculatePay(game.players);
+    const stored = JSON.parse(localStorage.getItem('games') || '[]');
+    const sessionGames = startTime
+      ? stored.filter((g) => g.timestamp >= startTime)
+      : [];
+    const totals = Object.fromEntries(
+      game.players.map((p) => [p.name, payCurrent[p.name]])
+    );
+    sessionGames.forEach((g) => {
+      Object.entries(g.totalPay).forEach(([n, v]) => {
+        totals[n] = (totals[n] || 0) + v;
+      });
+    });
+    setSessionPay(totals);
+    setSessionPairPay(calculatePairPayTotals(game.players, totals));
+    setShowSessionSettlement(true);
   };
 
   if (!started) {
@@ -311,7 +348,7 @@ function App() {
       {showSetup && (
         <PlayerSetupDialog players={game.players} onSave={saveNames} />
       )}
-      {game.isFinished && (
+      {game.isFinished && !showSessionSettlement && (
         <SettlementModal
           players={game.players}
           pay={pay}
@@ -320,6 +357,14 @@ function App() {
           onSync={syncGame}
           synced={isSynced}
           canSync={serverConnected}
+        />
+      )}
+      {showSessionSettlement && (
+        <TotalSettlementModal
+          players={game.players}
+          pay={sessionPay}
+          pairPay={sessionPairPay}
+          onConfirm={finalizeStopGame}
         />
       )}
     </div>
