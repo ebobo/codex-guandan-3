@@ -64,7 +64,7 @@ function GameItem({ game }) {
 }
 
 export default function History({ onBack }) {
-  const [games] = useState(() =>
+  const [games, setGames] = useState(() =>
     JSON.parse(localStorage.getItem('games') || '[]')
   );
   const [filterDate, setFilterDate] = useState(() =>
@@ -100,6 +100,16 @@ export default function History({ onBack }) {
     dailyDuration += g.duration || 0;
   });
 
+  const deleteDate = () => {
+    if (!filterDate) return;
+    if (!window.confirm(`删除 ${filterDate} 的所有本地记录吗？`)) return;
+    const remaining = games.filter(
+      (g) => new Date(g.timestamp).toISOString().slice(0, 10) !== filterDate
+    );
+    localStorage.setItem('games', JSON.stringify(remaining));
+    setGames(remaining);
+  };
+
   const syncFiltered = async () => {
     if (!filterDate) return;
     if (!window.confirm(`同步 ${filterDate} 的所有记录到中心?`)) return;
@@ -124,7 +134,7 @@ export default function History({ onBack }) {
     <div className='history'>
       <button onClick={onBack}>返回</button>
       <h2>本地历史记录</h2>
-      <div>
+      <div className='date-filter'>
         <label>
           日期筛选:
           <DatePicker
@@ -141,6 +151,9 @@ export default function History({ onBack }) {
             customInput={<DateButton value={filterDate} />}
           />
         </label>
+        <button onClick={deleteDate} disabled={!filterDate} title='删除当日记录'>
+          🗑️
+        </button>
       </div>
       <div>
         单日盈亏:
